@@ -317,9 +317,6 @@
     "symfony/options-resolver": {
         "version": "v4.0.4"
     },
-    "symfony/orm-pack": {
-        "version": "v1.0.5"
-    },
     "symfony/phpunit-bridge": {
         "version": "3.3",
         "recipe": {
@@ -341,8 +338,8 @@
     "symfony/process": {
         "version": "v4.0.2"
     },
-    "symfony/profiler-pack": {
-        "version": "v1.0.3"
+    "symfony/proxy-manager-bridge": {
+        "version": "v4.4.18"
     },
     "symfony/routing": {
         "version": "4.0",
