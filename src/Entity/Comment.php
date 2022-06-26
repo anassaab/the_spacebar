@@ -26,7 +26,7 @@ class Comment
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Content;
+    private $content;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="comments")
@@ -58,12 +58,12 @@ class Comment
 
     public function getContent(): ?string
     {
-        return $this->Content;
+        return $this->content;
     }
 
-    public function setContent(string $Content): self
+    public function setContent(string $content): self
     {
-        $this->Content = $Content;
+        $this->content = $content;
 
         return $this;
     }
