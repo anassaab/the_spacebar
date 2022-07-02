@@ -81,7 +81,7 @@
         "version": "v2.6.1"
     },
     "doctrine/persistence": {
-        "version": "v1.1.0"
+        "version": "v1.0.1"
     },
     "doctrine/reflection": {
         "version": "v1.0.0"
@@ -114,13 +114,13 @@
         "version": "v1.2.17"
     },
     "knplabs/knp-components": {
-        "version": "v1.3.10"
+        "version": "1.3.8"
     },
     "knplabs/knp-markdown-bundle": {
         "version": "1.6.0"
     },
     "knplabs/knp-paginator-bundle": {
-        "version": "v2.8.0"
+        "version": "v2.7.2"
     },
     "knplabs/knp-time-bundle": {
         "version": "1.8.0"
@@ -323,6 +323,9 @@
     "symfony/options-resolver": {
         "version": "v4.0.4"
     },
+    "symfony/orm-pack": {
+        "version": "v1.0.5"
+    },
     "symfony/phpunit-bridge": {
         "version": "3.3",
         "recipe": {
@@ -344,8 +347,8 @@
     "symfony/process": {
         "version": "v4.0.2"
     },
-    "symfony/proxy-manager-bridge": {
-        "version": "v4.4.18"
+    "symfony/profiler-pack": {
+        "version": "v1.0.3"
     },
     "symfony/routing": {
         "version": "4.0",
@@ -408,16 +411,13 @@
         "version": "v4.0.2"
     },
     "twig/extensions": {
-        "version": "1.5",
+        "version": "1.0",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-            "branch": "main",
+            "branch": "master",
             "version": "1.0",
-            "ref": "a86723ee8d8b2f9437c8ce60a5546a1c267da5ed"
-        },
-        "files": [
-            "config/packages/twig_extensions.yaml"
-        ]
+            "ref": "4851df0afc426b8f07204379d21fca25b6df5d68"
+        }
     },
     "twig/twig": {
         "version": "v2.4.4"
