@@ -10,12 +10,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-
+/**
+ * @IsGranted("ROLE_USER")
+ */
 class CommentAdminController extends AbstractController
 {
     /**
      * @Route("/admin/comment", name="app_comment_admin")
-     * @IsGranted("ROLE_ADMIN")
      */
     public function index(CommentRepository $repository, Request $request, PaginatorInterface $paginator): Response
     {
