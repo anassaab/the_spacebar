@@ -2,39 +2,65 @@
 
 namespace App\Security;
 
+use App\Repository\ApiTokenRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
-use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 
-class ApiTokenAuthenticator extends AbstractFormLoginAuthenticator
+class ApiTokenAuthenticator extends AbstractGuardAuthenticator
 {
+
+    private $apiTokenRepo;
+    public function __construct(ApiTokenRepository $apiTokenRepo)
+    {
+        $this->apiTokenRepo = $apiTokenRepo;
+    }
     public function supports(Request $request)
     {
-        // todo
+        // look for header "Authorization: Bearer <token>"
+        return $request->headers->has('Authorization')
+            && 0 === strpos($request->headers->get('Authorization'), 'Bearer ');
     }
 
     public function getCredentials(Request $request)
     {
-        // todo
+        $authorizationHeader = $request->headers->get('Authorization');
+
+        // skip beyond "Bearer "
+        return substr($authorizationHeader, 7);
     }
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        // todo
+        $token = $this->apiTokenRepo->findOneBy([
+            'token' => $credentials
+        ]);
+
+        if (!$token) {
+            throw new CustomUserMessageAuthenticationException('Invalid API Token');
+        }
+
+        if (!$token->getExpiresAt()) {
+            throw new CustomUserMessageAuthenticationException('Token expired');
+        }
+        return $token->getUser();
     }
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        // todo
+        return true;
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        // todo
+        return new JsonResponse([
+            'message' => $exception->getMessageKey()
+        ], 401);
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
@@ -49,11 +75,6 @@ class ApiTokenAuthenticator extends AbstractFormLoginAuthenticator
 
     public function supportsRememberMe()
     {
-        // todo
-    }
-
-    protected function getLoginUrl()
-    {
-        // TODO: Implement getLoginUrl() method.
+        return false;
     }
 }
