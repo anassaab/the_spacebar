@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Form\ArticleFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,13 +19,11 @@ class ArticleAdminController extends AbstractController
      */
     public function new(EntityManagerInterface $em)
     {
-        die('todo');
+        $form = $this->createForm(ArticleFormType::class);
 
-        return new Response(sprintf(
-            'Hiya! New Article id: #%d slug: %s',
-            $article->getId(),
-            $article->getSlug()
-        ));
+        return $this->render('article_admin/new.html.twig', [
+           'articleForm' => $form->createView(),
+        ]);
     }
 
 
