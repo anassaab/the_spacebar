@@ -3,9 +3,10 @@
 namespace App\DataFixtures;
 
 use App\Entity\Article;
+use App\Entity\Comment;
 use App\Entity\Tag;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectManager;
 
 class ArticleFixtures extends BaseFixture implements DependentFixtureInterface
 {
@@ -21,14 +22,10 @@ class ArticleFixtures extends BaseFixture implements DependentFixtureInterface
         'lightspeed.png',
     ];
 
-    private static $articleAuthors = [
-        'Mike Ferengi',
-        'Amy Oort',
-    ];
-
-    public function loadData(ObjectManager $manager)
+    protected function loadData(ObjectManager $manager)
     {
-        $this->createMany(Article::class, 30, function(Article $article, $count) use ($manager) {
+        $this->createMany(10, 'main_articles', function($count) use ($manager) {
+            $article = new Article();
             $article->setTitle($this->faker->randomElement(self::$articleTitles))
                 ->setContent(<<<EOF
 Spicy **jalapeno bacon** ipsum dolor amet veniam shank in dolore. Ham hock nisi landjaeger cow,
@@ -48,35 +45,34 @@ strip steak pork belly aliquip capicola officia. Labore deserunt esse chicken lo
 cow est ribeye adipisicing. Pig hamburger pork belly enim. Do porchetta minim capicola irure pancetta chuck
 fugiat.
 EOF
-            );
+                );
 
             // publish most articles
             if ($this->faker->boolean(70)) {
                 $article->setPublishedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             }
 
-            $article->setAuthor($this->faker->randomElement(self::$articleAuthors))
+            $article->setAuthor($this->getRandomReference('main_users'))
                 ->setHeartCount($this->faker->numberBetween(5, 100))
                 ->setImageFilename($this->faker->randomElement(self::$articleImages))
             ;
 
-            /** @var Tag[] $tags */
-            $tags = $this->getRandomReferences(Tag::class, $this->faker->numberBetween(0,5));
+            $tags = $this->getRandomReferences('main_tags', $this->faker->numberBetween(0, 5));
             foreach ($tags as $tag) {
                 $article->addTag($tag);
             }
 
+            return $article;
         });
 
         $manager->flush();
     }
 
-
-    function getDependencies()
+    public function getDependencies()
     {
-        // TODO: Implement getDependencies() method.
         return [
-            TagFixture::class
+            TagFixture::class,
+            UserFixture::class,
         ];
     }
 }
