@@ -293,6 +293,9 @@
             "ref": "cc1afd81841db36fbef982fe56b48ade6716fac4"
         }
     },
+    "symfony/form": {
+        "version": "v4.1.12"
+    },
     "symfony/framework-bundle": {
         "version": "3.3",
         "recipe": {
@@ -310,6 +313,9 @@
     },
     "symfony/inflector": {
         "version": "v4.4.37"
+    },
+    "symfony/intl": {
+        "version": "v4.4.43"
     },
     "symfony/lts": {
         "version": "4-dev"
@@ -349,6 +355,9 @@
     },
     "symfony/polyfill-ctype": {
         "version": "v1.9.0"
+    },
+    "symfony/polyfill-intl-icu": {
+        "version": "v1.26.0"
     },
     "symfony/polyfill-mbstring": {
         "version": "v1.6.0"
@@ -421,6 +430,19 @@
             "version": "3.3",
             "ref": "f75ac166398e107796ca94cc57fa1edaa06ec47f"
         }
+    },
+    "symfony/validator": {
+        "version": "4.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "4.1",
+            "ref": "21ab70175caf1e4b273791364fb30d27f1153546"
+        },
+        "files": [
+            "config/packages/test/validator.yaml",
+            "config/packages/validator.yaml"
+        ]
     },
     "symfony/var-dumper": {
         "version": "v4.0.3"
